@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">ListaToDo</string>
+    <string name="what_needs_to_be_done">What needs to be done?</string>
+    <string name="dodaj">dodaj</string>
+    <string name="here_will_be_the_name_of_the_task">Here will be the name of the task</string>
+    <string name="todotask">ToDoTask</string>
 </resources>
