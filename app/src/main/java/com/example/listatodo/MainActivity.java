@@ -33,5 +33,7 @@ public class MainActivity extends AppCompatActivity implements ClickListener {
     @Override
     public void onClickItem(int position) {
         System.out.println(position);
+        Intent intent = new Intent(this, CreateTaskA.class);
+        startActivity(intent);
     }
 }
