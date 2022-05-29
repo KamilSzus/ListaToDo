@@ -1,4 +1,4 @@
-package com.example.listatodo.taskData;
+package com.example.listatodo.database;
 
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
@@ -9,7 +9,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
-import java.sql.Date;
+import com.example.listatodo.taskDataModel.TaskCategory;
+import com.example.listatodo.taskDataModel.TaskData;
+import com.example.listatodo.taskDataModel.TaskStatus;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -97,9 +100,9 @@ public class TaskDatabaseHandler extends SQLiteOpenHelper {
                 ,cursor.getString(2)
                 ,Long.valueOf(cursor.getString(3))
                 ,Long.valueOf(cursor.getString(4))
-                ,TaskStatus.valueOf(cursor.getString(5))
+                , TaskStatus.valueOf(cursor.getString(5))
                 ,Boolean.valueOf(cursor.getString(6))
-                ,TaskCategory.valueOf(cursor.getString(7))
+                , TaskCategory.valueOf(cursor.getString(7))
                 ,Boolean.valueOf(cursor.getString(8))
         );
     }

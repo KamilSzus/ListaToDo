@@ -1,4 +1,4 @@
-package com.example.listatodo.taskData;
+package com.example.listatodo.taskDataModel;
 
 public enum TaskStatus {
     COMPLETE,

@@ -1,4 +1,4 @@
-package com.example.listatodo;
+package com.example.listatodo.recyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,14 +9,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.Arrays;
+import com.example.listatodo.R;
+import com.example.listatodo.taskDataModel.TaskData;
+
 import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
-    List<String> tempList = Arrays.asList("Buenos Aires", "Córdoba", "La Plata");
+    private final List<TaskData> taskDataList;
     private final ClickListener clickListener;
 
-    public RecyclerViewAdapter(ClickListener clickListener) {
+    public RecyclerViewAdapter(List<TaskData> taskDataList, ClickListener clickListener) {
+        this.taskDataList = taskDataList;
         this.clickListener = clickListener;
     }
 
@@ -28,14 +31,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.startTask.setText(tempList.get(position));
-        holder.endTask.setText(tempList.get(position));
-        holder.titleOfTask.setText(tempList.get(position));
+        holder.startTask.setText(String.valueOf(taskDataList.get(position).getTaskStart()));
+        holder.endTask.setText(String.valueOf(taskDataList.get(position).getTaskEnd()));
+        holder.titleOfTask.setText(taskDataList.get(position).getTaskTitle());
     }
 
     @Override
     public int getItemCount() {
-        return tempList.size();
+        return taskDataList.size();
     }
 
     @Override

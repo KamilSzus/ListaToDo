@@ -1,4 +1,4 @@
-package com.example.listatodo.taskData;
+package com.example.listatodo.taskDataModel;
 
 public class TaskData {
     private Integer id;
