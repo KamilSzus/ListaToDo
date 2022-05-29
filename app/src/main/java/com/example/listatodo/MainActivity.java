@@ -17,6 +17,8 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements ClickListener {
 
+    private List<TaskData> taskData;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements ClickListener {
        //         , TaskCategory.OTHER
        //         ,false));
 
-        List<TaskData> taskData = db.getAllTasks();
+        taskData = db.getAllTasks();
 
         for (TaskData task : taskData) {
             System.out.println(task.getTaskDescription());
@@ -71,7 +73,16 @@ public class MainActivity extends AppCompatActivity implements ClickListener {
     @Override
     public void onClickItem(int position) {
         System.out.println(position);
-        Intent intent = new Intent(this, CreateTaskA.class);
+        Intent intent = new Intent(this, MoreDetailsAboutTask.class);
+
+        intent.putExtra("title",taskData.get(position).getTaskTitle());
+        intent.putExtra("description",taskData.get(position).getTaskDescription());
+        intent.putExtra("start",taskData.get(position).getTaskStart());
+        intent.putExtra("end",taskData.get(position).getTaskEnd());
+        intent.putExtra("category",taskData.get(position).getTaskCategory());
+        intent.putExtra("status",taskData.get(position).getTaskStatus());
+        intent.putExtra("attachment",taskData.get(position).getHaveAttachment());
+
         startActivity(intent);
     }
 }
