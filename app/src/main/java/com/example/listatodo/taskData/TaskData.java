@@ -1,19 +1,19 @@
 package com.example.listatodo.taskData;
 
-import java.util.Date;
-
 public class TaskData {
+    private Integer id;
     private String taskTitle;
     private String taskDescription;
-    private Date taskStart;
-    private Date taskEnd;
+    private Long taskStart;
+    private Long taskEnd;
     private TaskStatus taskStatus;
     private Boolean haveNotification;
     private TaskCategory taskCategory;
     private Boolean haveAttachment;
-    private Object attachment;
+    private String attachment;
 
-    public TaskData(String taskTitle, String taskDescription, Date taskStart, Date taskEnd, TaskStatus taskStatus, Boolean haveNotification, TaskCategory taskCategory, Boolean haveAttachment) {
+    public TaskData(Integer id, String taskTitle, String taskDescription, Long taskStart, Long taskEnd, TaskStatus taskStatus, Boolean haveNotification, TaskCategory taskCategory, Boolean haveAttachment) {
+        this.id = id;
         this.taskTitle = taskTitle;
         this.taskDescription = taskDescription;
         this.taskStart = taskStart;
@@ -24,7 +24,8 @@ public class TaskData {
         this.haveAttachment = haveAttachment;
     }
 
-    public TaskData(String taskTitle, String taskDescription, Date taskStart, Date taskEnd, TaskStatus taskStatus, Boolean haveNotification, TaskCategory taskCategory, Boolean haveAttachment, Object attachment) {
+    public TaskData(Integer id, String taskTitle, String taskDescription, Long taskStart, Long taskEnd, TaskStatus taskStatus, Boolean haveNotification, TaskCategory taskCategory, Boolean haveAttachment, String attachment) {
+        this.id = id;
         this.taskTitle = taskTitle;
         this.taskDescription = taskDescription;
         this.taskStart = taskStart;
@@ -34,6 +35,37 @@ public class TaskData {
         this.taskCategory = taskCategory;
         this.haveAttachment = haveAttachment;
         this.attachment = attachment;
+    }
+
+    public TaskData(String taskTitle, String taskDescription, Long taskStart, Long taskEnd, TaskStatus taskStatus, Boolean haveNotification, TaskCategory taskCategory, Boolean haveAttachment) {
+        this.taskTitle = taskTitle;
+        this.taskDescription = taskDescription;
+        this.taskStart = taskStart;
+        this.taskEnd = taskEnd;
+        this.taskStatus = taskStatus;
+        this.haveNotification = haveNotification;
+        this.taskCategory = taskCategory;
+        this.haveAttachment = haveAttachment;
+    }
+
+    public TaskData(String taskTitle, String taskDescription, Long taskStart, Long taskEnd, TaskStatus taskStatus, Boolean haveNotification, TaskCategory taskCategory, Boolean haveAttachment, String attachment) {
+        this.taskTitle = taskTitle;
+        this.taskDescription = taskDescription;
+        this.taskStart = taskStart;
+        this.taskEnd = taskEnd;
+        this.taskStatus = taskStatus;
+        this.haveNotification = haveNotification;
+        this.taskCategory = taskCategory;
+        this.haveAttachment = haveAttachment;
+        this.attachment = attachment;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getTaskTitle() {
@@ -52,19 +84,19 @@ public class TaskData {
         this.taskDescription = taskDescription;
     }
 
-    public Date getTaskStart() {
+    public Long getTaskStart() {
         return taskStart;
     }
 
-    public void setTaskStart(Date taskStart) {
+    public void setTaskStart(Long taskStart) {
         this.taskStart = taskStart;
     }
 
-    public Date getTaskEnd() {
+    public Long getTaskEnd() {
         return taskEnd;
     }
 
-    public void setTaskEnd(Date taskEnd) {
+    public void setTaskEnd(Long taskEnd) {
         this.taskEnd = taskEnd;
     }
 
@@ -104,7 +136,7 @@ public class TaskData {
         return attachment;
     }
 
-    public void setAttachment(Object attachment) {
+    public void setAttachment(String attachment) {
         this.attachment = attachment;
     }
 }
