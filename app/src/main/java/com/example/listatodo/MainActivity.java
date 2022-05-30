@@ -21,8 +21,9 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements ClickListener {
 
     private List<TaskData> taskData;
-    public TaskDatabaseHandler db;
+    private TaskDatabaseHandler db;
     private ViewModel model;
+    private FloatingActionButton floatingButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,9 +64,13 @@ public class MainActivity extends AppCompatActivity implements ClickListener {
             System.out.println(task.getTaskDescription());
         }
 
-        FloatingActionButton floatingButton = findViewById(R.id.fab);
+        floatingButton = findViewById(R.id.fab);
         floatingButton.setOnClickListener(view -> replaceFragment(new CreateTask()));
         replaceFragment(new TaskRecyclerViewFragment());
+    }
+
+    public FloatingActionButton getFloatingActionButton(){
+        return floatingButton;
     }
 
     private void replaceFragment(Fragment fragment) {
@@ -74,6 +79,10 @@ public class MainActivity extends AppCompatActivity implements ClickListener {
                 .replace(R.id.mainLayout, fragment)
                 .setReorderingAllowed(true)
                 .commit();
+    }
+
+    public TaskDatabaseHandler getDb(){
+        return db;
     }
 
     @Override

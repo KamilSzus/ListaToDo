@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="CategoryValue">
+        <item>HOUSEWORK</item>
+        <item>JOB</item>
+        <item>STUDY</item>
+        <item>OTHER</item>
+    </string-array>
+    <string-array name="statusValue">
+        <item>COMPLETE</item>
+        <item>ACTIVE</item>
+        <item>DELETED</item>
+    </string-array>
+    <string-array name="ONOF">
+        <item>ON</item>
+        <item>OF</item>
+    </string-array>
+</resources>
