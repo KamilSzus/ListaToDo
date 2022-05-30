@@ -4,11 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.listatodo.recyclerView.ClickListener;
 import com.example.listatodo.recyclerView.RecyclerViewAdapter;
+import com.example.listatodo.recyclerView.TaskRecyclerViewFragment;
 import com.example.listatodo.taskDataModel.TaskData;
 import com.example.listatodo.database.TaskDatabaseHandler;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -19,12 +22,14 @@ public class MainActivity extends AppCompatActivity implements ClickListener {
 
     private List<TaskData> taskData;
     public TaskDatabaseHandler db;
+    private ViewModel model;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         db = new TaskDatabaseHandler(this);
+        model = new ViewModelProvider(this).get(ViewModel.class);
 
        // db.addTask(new TaskData("Title"
        //         ,"Description"
@@ -52,23 +57,23 @@ public class MainActivity extends AppCompatActivity implements ClickListener {
        //         ,false));
 
         taskData = db.getAllTasks();
+        model.setTaskData(taskData);
 
         for (TaskData task : taskData) {
             System.out.println(task.getTaskDescription());
         }
 
         FloatingActionButton floatingButton = findViewById(R.id.fab);
-        floatingButton.setOnClickListener(view -> replaceFragment());
-
-        RecyclerView recyclerView = findViewById(R.id.recyclerViewsTasks);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new RecyclerViewAdapter(taskData, this));
+        floatingButton.setOnClickListener(view -> replaceFragment(new CreateTask()));
+        replaceFragment(new TaskRecyclerViewFragment());
     }
 
-    private void replaceFragment() {
-        Intent intent = new Intent(this, CreateTaskA.class);
-        startActivity(intent);
+    private void replaceFragment(Fragment fragment) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.mainLayout, fragment)
+                .setReorderingAllowed(true)
+                .commit();
     }
 
     @Override
