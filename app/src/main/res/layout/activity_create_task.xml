@@ -8,27 +8,74 @@
     tools:context=".CreateTaskA">
 
     <EditText
-        android:id="@+id/taskTitle"
+        android:id="@+id/editTextTaskTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/what_needs_to_be_done"
+        android:textAlignment="viewStart"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/editTextTaskDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/description"
+        android:textAlignment="viewStart"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTaskTitle" />
+
+    <EditText
+        android:id="@+id/editTextDateStart"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/datestart"
+        android:textAlignment="viewStart"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/taskTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextTaskDescription" />
 
     <EditText
+        android:id="@+id/editTextDateEnd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/dateend"
+        android:textAlignment="viewStart"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextDateStart" />
+
+    <EditText
+        android:id="@+id/editTextTaskCategory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/category"
+        android:textAlignment="viewStart"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextDateEnd" />
+
+    <EditText
+        android:id="@+id/editTextTaskStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/taskStatus"
+        android:textAlignment="viewStart"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTaskCategory" />
+
+    <EditText
+        android:id="@+id/editTextHaveAttachment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/haveAttachment"
+        android:textAlignment="viewStart"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTaskStatus" />
 
     <Button
         android:id="@+id/createNewTask"

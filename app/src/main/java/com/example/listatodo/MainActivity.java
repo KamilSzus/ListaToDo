@@ -18,12 +18,13 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements ClickListener {
 
     private List<TaskData> taskData;
+    public TaskDatabaseHandler db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        TaskDatabaseHandler db = new TaskDatabaseHandler(this);
+        db = new TaskDatabaseHandler(this);
 
        // db.addTask(new TaskData("Title"
        //         ,"Description"
