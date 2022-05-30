@@ -26,7 +26,7 @@ public class TaskRecyclerViewFragment extends Fragment implements ClickListener 
 
     private View view;
     private List<TaskData> taskData;
-
+    private RecyclerViewAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,13 +49,12 @@ public class TaskRecyclerViewFragment extends Fragment implements ClickListener 
         RecyclerView recyclerView = view.findViewById(R.id.recyclerViewsTasks);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setAdapter(new RecyclerViewAdapter(taskData, this));
+        adapter = new RecyclerViewAdapter(taskData, this);
+        recyclerView.setAdapter(adapter);
     }
-
 
     @Override
     public void onClickItem(int position) {
-        System.out.println(position);
         Intent intent = new Intent(getActivity(), MoreDetailsAboutTask.class);
 
         intent.putExtra("title",taskData.get(position).getTaskTitle());
@@ -67,5 +66,12 @@ public class TaskRecyclerViewFragment extends Fragment implements ClickListener 
         intent.putExtra("attachment",taskData.get(position).getHaveAttachment());
 
         startActivity(intent);
+    }
+
+    @Override
+    public void onLongClickItem(int position) {
+        ((MainActivity) requireActivity()).getDb().deleteTask(taskData.get(position));
+        taskData.remove(position);
+        adapter.notifyItemRemoved(position);
     }
 }

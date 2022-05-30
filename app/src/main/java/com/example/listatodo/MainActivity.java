@@ -100,4 +100,10 @@ public class MainActivity extends AppCompatActivity implements ClickListener {
 
         startActivity(intent);
     }
+
+    @Override
+    public void onLongClickItem(int position) {
+        db.deleteTask(taskData.get(position));
+
+    }
 }

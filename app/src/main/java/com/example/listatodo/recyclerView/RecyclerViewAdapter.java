@@ -72,6 +72,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
             itemView.setOnClickListener(v -> clickListener.onClickItem(getAdapterPosition()));
 
+            itemView.setOnLongClickListener(view -> {
+                clickListener.onLongClickItem(getAdapterPosition());
+                return true;
+            });
+
         }
     }
 
