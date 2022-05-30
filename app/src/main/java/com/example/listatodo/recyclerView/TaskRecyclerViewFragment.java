@@ -1,5 +1,6 @@
 package com.example.listatodo.recyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.listatodo.MainActivity;
+import com.example.listatodo.MoreDetailsAboutTask;
 import com.example.listatodo.R;
 import com.example.listatodo.ViewModel;
 import com.example.listatodo.taskDataModel.TaskData;
@@ -22,7 +24,9 @@ import java.util.List;
 
 public class TaskRecyclerViewFragment extends Fragment implements ClickListener {
 
-    View view;
+    private View view;
+    private List<TaskData> taskData;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -38,6 +42,7 @@ public class TaskRecyclerViewFragment extends Fragment implements ClickListener 
         final Observer<List<TaskData>> taskDataObserver = this::startRecyclerView;
         ViewModel model = new ViewModelProvider((MainActivity)requireActivity()).get(ViewModel.class);
         model.getTaskData().observe(getViewLifecycleOwner(),taskDataObserver);
+        taskData = model.getTaskData().getValue();
     }
 
     private void startRecyclerView(List<TaskData> taskData) {
@@ -51,16 +56,16 @@ public class TaskRecyclerViewFragment extends Fragment implements ClickListener 
     @Override
     public void onClickItem(int position) {
         System.out.println(position);
-       // Intent intent = new Intent(this, MoreDetailsAboutTask.class);
-//
-       // intent.putExtra("title",taskData.get(position).getTaskTitle());
-       // intent.putExtra("description",taskData.get(position).getTaskDescription());
-       // intent.putExtra("start",taskData.get(position).getTaskStart());
-       // intent.putExtra("end",taskData.get(position).getTaskEnd());
-       // intent.putExtra("category",taskData.get(position).getTaskCategory());
-       // intent.putExtra("status",taskData.get(position).getTaskStatus());
-       // intent.putExtra("attachment",taskData.get(position).getHaveAttachment());
-//
-       // startActivity(intent);
+        Intent intent = new Intent(getActivity(), MoreDetailsAboutTask.class);
+
+        intent.putExtra("title",taskData.get(position).getTaskTitle());
+        intent.putExtra("description",taskData.get(position).getTaskDescription());
+        intent.putExtra("start",taskData.get(position).getTaskStart());
+        intent.putExtra("end",taskData.get(position).getTaskEnd());
+        intent.putExtra("category",taskData.get(position).getTaskCategory());
+        intent.putExtra("status",taskData.get(position).getTaskStatus());
+        intent.putExtra("attachment",taskData.get(position).getHaveAttachment());
+
+        startActivity(intent);
     }
 }

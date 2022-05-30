@@ -60,7 +60,7 @@ public class CreateTask extends Fragment {
     private Long convertStringDateToLong(String date){
         long startDate = 0;
         try {
-            @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             Date newDate = sdf.parse(date);
 
             startDate = newDate.getTime();

@@ -56,8 +56,8 @@
             android:hint="@string/dateend"
             android:textAlignment="center"
             android:textSize="16sp"
-            app:layout_constraintStart_toEndOf="@+id/taskStartDate"
-            app:layout_constraintTop_toBottomOf="@+id/taskToBeDone" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/taskStartDate" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
