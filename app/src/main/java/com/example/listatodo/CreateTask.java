@@ -1,13 +1,7 @@
 package com.example.listatodo;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,10 +9,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
+import com.example.listatodo.recyclerView.TaskRecyclerViewFragment;
 import com.example.listatodo.taskDataModel.TaskCategory;
 import com.example.listatodo.taskDataModel.TaskData;
 import com.example.listatodo.taskDataModel.TaskStatus;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -57,13 +55,14 @@ public class CreateTask extends Fragment {
         createTask.setOnClickListener(v -> createTask());
     }
 
-    private Long convertStringDateToLong(String date){
+    private Long convertStringDateToLong(String date) {
         long startDate = 0;
         try {
             @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             Date newDate = sdf.parse(date);
 
             startDate = newDate.getTime();
+            System.out.println(startDate);
 
         } catch (ParseException e) {
             e.printStackTrace();
@@ -73,12 +72,21 @@ public class CreateTask extends Fragment {
 
     private void createTask() {
         ((MainActivity) requireActivity()).getDb().addTask(new TaskData(editTextTaskTitle.getText().toString()
-                         ,editTextTaskDescription.getText().toString()
-                         ,convertStringDateToLong(editTextDateStart.getText().toString())
-                         ,convertStringDateToLong(editTextDateEnd.getText().toString())
-                         , TaskStatus.ACTIVE
-                         ,false
-                         , TaskCategory.valueOf(spinnerCategory.getSelectedItem().toString())
-                         ,Boolean.valueOf(editTextHaveAttachment.getText().toString())));
+                , editTextTaskDescription.getText().toString()
+                , convertStringDateToLong(editTextDateStart.getText().toString())
+                , convertStringDateToLong(editTextDateEnd.getText().toString())
+                , TaskStatus.ACTIVE
+                , false
+                , TaskCategory.valueOf(spinnerCategory.getSelectedItem().toString())
+                , Boolean.valueOf(editTextHaveAttachment.getText().toString())));
+
+        ((MainActivity) requireActivity()).loadTasks();
+
+        ((MainActivity) requireActivity()).getFloatingActionButton().show();
+        getParentFragmentManager()
+                .beginTransaction()
+                .replace(R.id.mainLayout, new TaskRecyclerViewFragment())
+                .setReorderingAllowed(true)
+                .commit();
     }
 }

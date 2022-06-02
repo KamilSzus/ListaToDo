@@ -29,7 +29,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.task, parent, false),clickListener);
+        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.task, parent, false), clickListener);
     }
 
     @Override
@@ -38,15 +38,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.endTask.setText(convertTime(taskDataList.get(position).getTaskEnd()));
         holder.titleOfTask.setText(taskDataList.get(position).getTaskTitle());
     }
+
     private String convertTime(Long time) {
         final DateTimeFormatter formatter =
                 DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-        final long unixTime = time;
-        return Instant.ofEpochSecond(unixTime)
+        return Instant.ofEpochMilli(time)
                 .atZone(ZoneId.systemDefault())
                 .format(formatter);
     }
+
     @Override
     public int getItemCount() {
         return taskDataList.size();
@@ -57,13 +58,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return R.layout.task;
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView titleOfTask;
         TextView startTask;
         TextView endTask;
         ImageButton finishTask;
 
-        ViewHolder(View itemView,ClickListener clickListener) {
+        ViewHolder(View itemView, ClickListener clickListener) {
             super(itemView);
             titleOfTask = itemView.findViewById(R.id.taskToBeDone);
             startTask = itemView.findViewById(R.id.taskStartDate);

@@ -5,6 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+
 public class MoreDetailsAboutTask extends AppCompatActivity {
 
     private TextView textViewTaskTitle;
@@ -27,10 +31,10 @@ public class MoreDetailsAboutTask extends AppCompatActivity {
         textViewTaskDescription.setText(getIntent().getStringExtra("description"));
 
         textViewDateStart = findViewById(R.id.textViewDateStart);
-        textViewDateStart.setText(String.valueOf(getIntent().getLongExtra("start",0L)));
+        textViewDateStart.setText(convertTime(getIntent().getLongExtra("start", 0L)));
 
         textViewDateEnd = findViewById(R.id.textViewDateEnd);
-        textViewDateEnd.setText(String.valueOf(getIntent().getLongExtra("end",0L)));
+        textViewDateEnd.setText(convertTime(getIntent().getLongExtra("end", 0L)));
 
         textViewTaskCategory = findViewById(R.id.textViewTaskCategory);
         textViewTaskCategory.setText((getIntent().getSerializableExtra("category")).toString());
@@ -39,6 +43,15 @@ public class MoreDetailsAboutTask extends AppCompatActivity {
         textViewTaskStatus.setText((getIntent().getSerializableExtra("status")).toString());
 
         textViewHaveAttachment = findViewById(R.id.textViewHaveAttachment);
-        textViewHaveAttachment.setText(String.valueOf(getIntent().getBooleanExtra("attachment",false)));
+        textViewHaveAttachment.setText(String.valueOf(getIntent().getBooleanExtra("attachment", false)));
+    }
+
+    private String convertTime(Long time) {
+        final DateTimeFormatter formatter =
+                DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        return Instant.ofEpochMilli(time)
+                .atZone(ZoneId.systemDefault())
+                .format(formatter);
     }
 }

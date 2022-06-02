@@ -34,14 +34,18 @@ public class TaskRecyclerViewFragment extends Fragment implements ClickListener 
         return inflater.inflate(R.layout.fragment_task_recycler_view, container, false);
     }
 
+    public RecyclerViewAdapter getRecyclerViewAdapter(){
+        return adapter;
+    }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         this.view = view;
         final Observer<List<TaskData>> taskDataObserver = this::startRecyclerView;
-        ViewModel model = new ViewModelProvider((MainActivity)requireActivity()).get(ViewModel.class);
-        model.getTaskData().observe(getViewLifecycleOwner(),taskDataObserver);
+        ViewModel model = new ViewModelProvider(requireActivity()).get(ViewModel.class);
+        model.getTaskData().observe(getViewLifecycleOwner(), taskDataObserver);
         taskData = model.getTaskData().getValue();
     }
 
@@ -57,13 +61,13 @@ public class TaskRecyclerViewFragment extends Fragment implements ClickListener 
     public void onClickItem(int position) {
         Intent intent = new Intent(getActivity(), MoreDetailsAboutTask.class);
 
-        intent.putExtra("title",taskData.get(position).getTaskTitle());
-        intent.putExtra("description",taskData.get(position).getTaskDescription());
-        intent.putExtra("start",taskData.get(position).getTaskStart());
-        intent.putExtra("end",taskData.get(position).getTaskEnd());
-        intent.putExtra("category",taskData.get(position).getTaskCategory());
-        intent.putExtra("status",taskData.get(position).getTaskStatus());
-        intent.putExtra("attachment",taskData.get(position).getHaveAttachment());
+        intent.putExtra("title", taskData.get(position).getTaskTitle());
+        intent.putExtra("description", taskData.get(position).getTaskDescription());
+        intent.putExtra("start", taskData.get(position).getTaskStart());
+        intent.putExtra("end", taskData.get(position).getTaskEnd());
+        intent.putExtra("category", taskData.get(position).getTaskCategory());
+        intent.putExtra("status", taskData.get(position).getTaskStatus());
+        intent.putExtra("attachment", taskData.get(position).getHaveAttachment());
 
         startActivity(intent);
     }

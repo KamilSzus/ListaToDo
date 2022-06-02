@@ -57,16 +57,16 @@ public class MainActivity extends AppCompatActivity implements ClickListener {
        //         , TaskCategory.OTHER
        //         ,false));
 
-        taskData = db.getAllTasks();
-        model.setTaskData(taskData);
-
-        for (TaskData task : taskData) {
-            System.out.println(task.getTaskDescription());
-        }
+        loadTasks();
 
         floatingButton = findViewById(R.id.fab);
         floatingButton.setOnClickListener(view -> replaceFragment(new CreateTask()));
         replaceFragment(new TaskRecyclerViewFragment());
+    }
+
+    public void loadTasks() {
+        taskData = db.getAllTasks();
+        model.setTaskData(taskData);
     }
 
     public FloatingActionButton getFloatingActionButton(){
