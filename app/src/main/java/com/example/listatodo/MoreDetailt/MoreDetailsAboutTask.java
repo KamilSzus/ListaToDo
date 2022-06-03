@@ -31,6 +31,7 @@ public class MoreDetailsAboutTask extends Fragment {
     private TextView textViewHaveAttachment;
     private Button buttonBack;
     private Button buttonModifyTask;
+    private Bundle bundle;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,7 +44,7 @@ public class MoreDetailsAboutTask extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         ((MainActivity) requireActivity()).getFloatingActionButton().hide();
 
-        Bundle bundle = this.getArguments();
+        bundle = this.getArguments();
 
         textViewTaskTitle = view.findViewById(R.id.textViewTaskTitle);
         textViewTaskTitle.setText(bundle.getString("title"));
@@ -74,6 +75,7 @@ public class MoreDetailsAboutTask extends Fragment {
     }
 
     private void switchFragment(Fragment fragment) {
+        fragment.setArguments(bundle);
         ((MainActivity) requireActivity()).getFloatingActionButton().show();
         getParentFragmentManager()
                 .beginTransaction()

@@ -108,7 +108,7 @@ public class TaskDatabaseHandler extends SQLiteOpenHelper {
     }
 
     public List<TaskData> getAllTasks() {
-        List<TaskData> contactList = new ArrayList<TaskData>();
+        List<TaskData> contactList = new ArrayList<>();
         String selectQuery = "SELECT  * FROM " + TABLE_NAME;
 
         SQLiteDatabase db = this.getWritableDatabase();
@@ -145,7 +145,9 @@ public class TaskDatabaseHandler extends SQLiteOpenHelper {
         values.put(TASK_STATUS, task.getTaskStatus().toString());
         values.put(TASK_NOTIFICATION, task.getHaveNotification());
         values.put(TASK_CATEGORY, task.getTaskCategory().toString());
-        values.put(TASK_ATTACHMENT, task.getAttachment().toString());
+        values.put(TASK_ATTACHMENT, "task.getAttachment().toString()");
+
+        System.out.println(task.getId());
 
         return db.update(TABLE_NAME, values, ID + " = ?",
                 new String[] { String.valueOf(task.getId()) });
