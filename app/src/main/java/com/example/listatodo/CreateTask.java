@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,6 +26,7 @@ import java.util.Date;
 public class CreateTask extends Fragment {
 
     private Button createTask;
+    private Button cancel;
     private EditText editTextTaskTitle;
     private EditText editTextTaskDescription;
     private EditText editTextDateStart;
@@ -32,6 +34,11 @@ public class CreateTask extends Fragment {
     private EditText editTextHaveAttachment;
     private Spinner spinnerCategory;
     private Spinner spinnerNotification;
+
+    private Long startTaskDate;
+    private Long endTaskDate;
+    private String taskTitle;
+    private String taskDescription;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -50,7 +57,8 @@ public class CreateTask extends Fragment {
         editTextHaveAttachment = view.findViewById(R.id.editTextHaveAttachment);
         spinnerCategory = view.findViewById(R.id.spinnerCategory);
         spinnerNotification = view.findViewById(R.id.spinnerNotification);
-
+        cancel = view.findViewById(R.id.cancel);
+        cancel.setOnClickListener(v -> switchFragment());
         createTask = view.findViewById(R.id.createNewTask);
         createTask.setOnClickListener(v -> createTask());
     }
@@ -71,22 +79,57 @@ public class CreateTask extends Fragment {
     }
 
     private void createTask() {
-        ((MainActivity) requireActivity()).getDb().addTask(new TaskData(editTextTaskTitle.getText().toString()
-                , editTextTaskDescription.getText().toString()
-                , convertStringDateToLong(editTextDateStart.getText().toString())
-                , convertStringDateToLong(editTextDateEnd.getText().toString())
-                , TaskStatus.ACTIVE
-                , false
-                , TaskCategory.valueOf(spinnerCategory.getSelectedItem().toString())
-                , Boolean.valueOf(editTextHaveAttachment.getText().toString())));
+        if (validateData()) {
+            ((MainActivity) requireActivity()).getDb().addTask(new TaskData(taskTitle
+                    , taskDescription
+                    , startTaskDate
+                    , endTaskDate
+                    , TaskStatus.ACTIVE
+                    , spinnerNotification.getSelectedItem().toString().equals("ON")
+                    , TaskCategory.valueOf(spinnerCategory.getSelectedItem().toString())
+                    , Boolean.valueOf(editTextHaveAttachment.getText().toString())));
 
-        ((MainActivity) requireActivity()).loadTasks();
+            ((MainActivity) requireActivity()).loadTasks();
 
+            switchFragment();
+        }
+    }
+
+    private void switchFragment() {
         ((MainActivity) requireActivity()).getFloatingActionButton().show();
         getParentFragmentManager()
                 .beginTransaction()
                 .replace(R.id.mainLayout, new TaskRecyclerViewFragment())
                 .setReorderingAllowed(true)
                 .commit();
+    }
+
+    private boolean validateData() {
+        taskTitle = editTextTaskTitle.getText().toString();
+        if (taskTitle.isEmpty()) {
+            editTextTaskTitle.setError("Pole nie moze byc puste");
+            return false;
+        }
+        taskDescription = editTextTaskDescription.getText().toString();
+        if (taskDescription.isEmpty()) {
+            editTextTaskDescription.setError("Pole nie moze byc puste");
+            return false;
+        }
+        startTaskDate = convertStringDateToLong(editTextDateStart.getText().toString());
+        if (startTaskDate == 0) {
+            editTextDateStart.setError("niewłaściwy format daty");
+            return false;
+        }
+        endTaskDate = convertStringDateToLong(editTextDateEnd.getText().toString());
+        if (endTaskDate == 0) {
+            editTextDateEnd.setError("niewłaściwy format daty");
+            return false;
+        }
+        if (startTaskDate > endTaskDate) {
+            editTextDateEnd.setError("data zakonczenia zadanie nie moze byc wczesniejsza niz jego rozpoczecia");
+            return false;
+        }
+
+        return true;
     }
 }

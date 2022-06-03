@@ -74,6 +74,14 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_weight="1"
             app:layout_constraintStart_toEndOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="@string/notification"
+            />
+
         <Spinner
             android:id="@+id/spinnerNotification"
             android:layout_width="wrap_content"
@@ -94,6 +102,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tableRow" />
 
+    <Button
+        android:id="@+id/cancel"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="@string/back"
+        app:layout_constraintBottom_toTopOf="@+id/createNewTask"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
     <Button
         android:id="@+id/createNewTask"
         android:layout_width="match_parent"

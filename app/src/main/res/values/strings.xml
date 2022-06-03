@@ -14,4 +14,6 @@
     <string name="taskStatus">Task status</string>
     <string name="haveAttachment">Have Attachment</string>
     <string name="dateFormat">yyyy-MM-dd</string>
+    <string name="notification">Notification:</string>
+    <string name="back">Back</string>
 </resources>
