@@ -19,6 +19,8 @@ import com.example.listatodo.taskDataModel.TaskData;
 import com.example.listatodo.database.TaskDatabaseHandler;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity{
@@ -44,6 +46,7 @@ public class MainActivity extends AppCompatActivity{
 
     public void loadTasks() {
         taskData = db.getAllTasks();
+        taskData.sort(Comparator.comparing(TaskData::getTaskEnd));
         model.setTaskData(taskData);
     }
 
