@@ -1,0 +1,33 @@
+<androidx.preference.PreferenceScreen
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.preference.PreferenceCategory
+        app:key="notifications_category"
+        app:title="Notyfikacje">
+
+        <androidx.preference.SwitchPreferenceCompat
+            app:key="notifications"
+            app:title="Enable message notifications"/>
+
+    </androidx.preference.PreferenceCategory>
+
+    <androidx.preference.PreferenceCategory
+        app:key="help_category"
+        app:title="Filtracja">
+
+        <androidx.preference.SwitchPreferenceCompat
+            app:key="completedTask"
+            app:defaultValue="true"
+            app:title="Pokaż ukończone zadania"/>
+
+        <androidx.preference.ListPreference
+            app:defaultValue="ALL"
+            app:entries="@array/taskType"
+            app:entryValues="@array/taskType"
+            app:key="categoryTasks"
+            app:title="Rodzaj zadań wyświetlanych"
+            app:useSimpleSummaryProvider="true" />
+
+    </androidx.preference.PreferenceCategory>
+
+</androidx.preference.PreferenceScreen>
