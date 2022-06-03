@@ -1,6 +1,5 @@
 package com.example.listatodo.recyclerView;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,10 +13,10 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.listatodo.MainActivity;
-import com.example.listatodo.MoreDetailsAboutTask;
-import com.example.listatodo.R;
 import com.example.listatodo.MVVM.ViewModel;
+import com.example.listatodo.MainActivity;
+import com.example.listatodo.MoreDetailt.MoreDetailsAboutTask;
+import com.example.listatodo.R;
 import com.example.listatodo.taskDataModel.TaskData;
 
 import java.util.List;
@@ -32,10 +31,6 @@ public class TaskRecyclerViewFragment extends Fragment implements ClickListener 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_task_recycler_view, container, false);
-    }
-
-    public RecyclerViewAdapter getRecyclerViewAdapter(){
-        return adapter;
     }
 
     @Override
@@ -57,19 +52,28 @@ public class TaskRecyclerViewFragment extends Fragment implements ClickListener 
         recyclerView.setAdapter(adapter);
     }
 
+    private void replaceFragment(Bundle bundle) {
+        Fragment fragment = new MoreDetailsAboutTask();
+        fragment.setArguments(bundle);
+        getParentFragmentManager()
+                .beginTransaction()
+                .replace(R.id.mainLayout, fragment)
+                .setReorderingAllowed(true)
+                .commit();
+    }
+
     @Override
     public void onClickItem(int position) {
-        Intent intent = new Intent(getActivity(), MoreDetailsAboutTask.class);
-
-        intent.putExtra("title", taskData.get(position).getTaskTitle());
-        intent.putExtra("description", taskData.get(position).getTaskDescription());
-        intent.putExtra("start", taskData.get(position).getTaskStart());
-        intent.putExtra("end", taskData.get(position).getTaskEnd());
-        intent.putExtra("category", taskData.get(position).getTaskCategory());
-        intent.putExtra("status", taskData.get(position).getTaskStatus());
-        intent.putExtra("attachment", taskData.get(position).getHaveAttachment());
-
-        startActivity(intent);
+        Bundle bundle = new Bundle();
+        bundle.putString("title",taskData.get(position).getTaskTitle());
+        bundle.putString("description",taskData.get(position).getTaskDescription());
+        bundle.putString("description",taskData.get(position).getTaskDescription());
+        bundle.putLong("start",taskData.get(position).getTaskStart());
+        bundle.putLong("end",taskData.get(position).getTaskEnd());
+        bundle.putSerializable("category",taskData.get(position).getTaskCategory());
+        bundle.putSerializable("status",taskData.get(position).getTaskStatus());
+        bundle.putBoolean("attachment",taskData.get(position).getHaveAttachment());
+        replaceFragment(bundle);
     }
 
     @Override

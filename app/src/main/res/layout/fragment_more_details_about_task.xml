@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_alignParentStart="true"
-    android:layout_alignParentBottom="true"
-    tools:context=".MoreDetailsAboutTask">
+    android:layout_alignParentBottom="true">
 
 
     <TextView
@@ -98,4 +96,14 @@
         android:layout_height="wrap_content"
         android:hint="@string/haveAttachment"
         android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/buttonModifyTask"
+        android:text="@string/modify_task"
+        android:textSize="20sp" />
+    <Button
+        android:id="@+id/buttonBack"
+        android:text="@string/back"
+        android:textSize="20sp" />
+
 </TableLayout>

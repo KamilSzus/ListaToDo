@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.listatodo.MVVM.ViewModel;
+import com.example.listatodo.MoreDetailt.MoreDetailsAboutTask;
 import com.example.listatodo.createTask.CreateTask;
 import com.example.listatodo.recyclerView.ClickListener;
 import com.example.listatodo.recyclerView.TaskRecyclerViewFragment;
@@ -20,7 +21,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements ClickListener {
+public class MainActivity extends AppCompatActivity{
 
     private List<TaskData> taskData;
     private TaskDatabaseHandler db;
@@ -60,28 +61,6 @@ public class MainActivity extends AppCompatActivity implements ClickListener {
 
     public TaskDatabaseHandler getDb(){
         return db;
-    }
-
-    @Override
-    public void onClickItem(int position) {
-        System.out.println(position);
-        Intent intent = new Intent(this, MoreDetailsAboutTask.class);
-
-        intent.putExtra("title",taskData.get(position).getTaskTitle());
-        intent.putExtra("description",taskData.get(position).getTaskDescription());
-        intent.putExtra("start",taskData.get(position).getTaskStart());
-        intent.putExtra("end",taskData.get(position).getTaskEnd());
-        intent.putExtra("category",taskData.get(position).getTaskCategory());
-        intent.putExtra("status",taskData.get(position).getTaskStatus());
-        intent.putExtra("attachment",taskData.get(position).getHaveAttachment());
-
-        startActivity(intent);
-    }
-
-    @Override
-    public void onLongClickItem(int position) {
-        db.deleteTask(taskData.get(position));
-
     }
 
     @Override
