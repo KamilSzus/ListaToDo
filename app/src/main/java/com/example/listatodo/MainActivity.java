@@ -6,11 +6,10 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.listatodo.MVVM.ViewModel;
+import com.example.listatodo.createTask.CreateTask;
 import com.example.listatodo.recyclerView.ClickListener;
-import com.example.listatodo.recyclerView.RecyclerViewAdapter;
 import com.example.listatodo.recyclerView.TaskRecyclerViewFragment;
 import com.example.listatodo.taskDataModel.TaskData;
 import com.example.listatodo.database.TaskDatabaseHandler;

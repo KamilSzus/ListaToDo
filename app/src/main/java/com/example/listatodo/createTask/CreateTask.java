@@ -1,4 +1,4 @@
-package com.example.listatodo;
+package com.example.listatodo.createTask;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -14,6 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.listatodo.MainActivity;
+import com.example.listatodo.R;
 import com.example.listatodo.recyclerView.TaskRecyclerViewFragment;
 import com.example.listatodo.taskDataModel.TaskCategory;
 import com.example.listatodo.taskDataModel.TaskData;

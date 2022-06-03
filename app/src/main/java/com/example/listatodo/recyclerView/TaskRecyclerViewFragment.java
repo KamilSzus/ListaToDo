@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.listatodo.MainActivity;
 import com.example.listatodo.MoreDetailsAboutTask;
 import com.example.listatodo.R;
-import com.example.listatodo.ViewModel;
+import com.example.listatodo.MVVM.ViewModel;
 import com.example.listatodo.taskDataModel.TaskData;
 
 import java.util.List;
