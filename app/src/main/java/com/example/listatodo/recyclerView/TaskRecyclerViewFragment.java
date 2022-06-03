@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,6 +26,8 @@ import java.util.List;
 public class TaskRecyclerViewFragment extends Fragment implements ClickListener {
 
     private View view;
+    private Button buttonFindTask;
+    private EditText editTextFindTask;
     private List<TaskData> taskData;
     private RecyclerViewAdapter adapter;
 
@@ -42,6 +46,19 @@ public class TaskRecyclerViewFragment extends Fragment implements ClickListener 
         ViewModel model = new ViewModelProvider(requireActivity()).get(ViewModel.class);
         model.getTaskData().observe(getViewLifecycleOwner(), taskDataObserver);
         taskData = model.getTaskData().getValue();
+        buttonFindTask = view.findViewById(R.id.buttonWyszukaj);
+        editTextFindTask = view.findViewById(R.id.editTextFindTask);
+        buttonFindTask.setOnClickListener(v -> findTask(editTextFindTask.getText().toString()));
+
+    }
+
+    private void findTask(String taskTitle) {
+        if(taskTitle.isEmpty()){
+            ((MainActivity) requireActivity()).loadTasks();
+        }else{
+            ((MainActivity) requireActivity()).loadTasksByTitle(taskTitle);
+        }
+
     }
 
     private void startRecyclerView(List<TaskData> taskData) {
@@ -65,14 +82,14 @@ public class TaskRecyclerViewFragment extends Fragment implements ClickListener 
     @Override
     public void onClickItem(int position) {
         Bundle bundle = new Bundle();
-        bundle.putString("title",taskData.get(position).getTaskTitle());
-        bundle.putString("description",taskData.get(position).getTaskDescription());
-        bundle.putString("description",taskData.get(position).getTaskDescription());
-        bundle.putLong("start",taskData.get(position).getTaskStart());
-        bundle.putLong("end",taskData.get(position).getTaskEnd());
-        bundle.putSerializable("category",taskData.get(position).getTaskCategory());
-        bundle.putSerializable("status",taskData.get(position).getTaskStatus());
-        bundle.putBoolean("attachment",taskData.get(position).getHaveAttachment());
+        bundle.putString("title", taskData.get(position).getTaskTitle());
+        bundle.putString("description", taskData.get(position).getTaskDescription());
+        bundle.putString("description", taskData.get(position).getTaskDescription());
+        bundle.putLong("start", taskData.get(position).getTaskStart());
+        bundle.putLong("end", taskData.get(position).getTaskEnd());
+        bundle.putSerializable("category", taskData.get(position).getTaskCategory());
+        bundle.putSerializable("status", taskData.get(position).getTaskStatus());
+        bundle.putBoolean("attachment", taskData.get(position).getHaveAttachment());
         replaceFragment(bundle);
     }
 

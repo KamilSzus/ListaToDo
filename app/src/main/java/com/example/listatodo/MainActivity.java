@@ -11,17 +11,15 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.listatodo.MVVM.ViewModel;
-import com.example.listatodo.MoreDetailt.MoreDetailsAboutTask;
 import com.example.listatodo.createTask.CreateTask;
-import com.example.listatodo.recyclerView.ClickListener;
+import com.example.listatodo.database.TaskDatabaseHandler;
 import com.example.listatodo.recyclerView.TaskRecyclerViewFragment;
 import com.example.listatodo.taskDataModel.TaskData;
-import com.example.listatodo.database.TaskDatabaseHandler;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class MainActivity extends AppCompatActivity{
 
@@ -46,6 +44,18 @@ public class MainActivity extends AppCompatActivity{
 
     public void loadTasks() {
         taskData = db.getAllTasks();
+        taskData.sort(Comparator.comparing(TaskData::getTaskEnd));
+        model.setTaskData(taskData);
+    }
+
+    public void loadTasksByTitle(String title){
+        taskData = db.getAllTasks();
+        taskData = taskData.stream()
+                .filter(taskData1 -> taskData1
+                        .getTaskTitle()
+                        .contains(title))
+                .collect(Collectors.toList());
+
         taskData.sort(Comparator.comparing(TaskData::getTaskEnd));
         model.setTaskData(taskData);
     }
