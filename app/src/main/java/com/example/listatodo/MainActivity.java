@@ -34,31 +34,6 @@ public class MainActivity extends AppCompatActivity implements ClickListener {
         db = new TaskDatabaseHandler(this);
         model = new ViewModelProvider(this).get(ViewModel.class);
 
-       // db.addTask(new TaskData("Title"
-       //         ,"Description"
-       //         ,111L
-       //         ,222L
-       //         , TaskStatus.COMPLETE
-       //         ,false
-       //         , TaskCategory.OTHER
-       //         ,false));
-       // db.addTask(new TaskData("Title"
-       //         ,"Description2"
-       //         ,111L
-       //         ,222L
-       //         , TaskStatus.COMPLETE
-       //         ,false
-       //         , TaskCategory.OTHER
-       //         ,false));
-       // db.addTask(new TaskData("Title"
-       //         ,"Description3"
-       //         ,111L
-       //         ,222L
-       //         , TaskStatus.COMPLETE
-       //         ,false
-       //         , TaskCategory.OTHER
-       //         ,false));
-
         loadTasks();
 
         floatingButton = findViewById(R.id.fab);
