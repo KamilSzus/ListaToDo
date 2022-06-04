@@ -26,6 +26,7 @@
             android:name=".SettingsActivity"
             android:exported="false"
             android:parentActivityName=".MainActivity" />
+        <receiver android:name=".notification.NotificationReceiver"/>
     </application>
 
 </manifest>

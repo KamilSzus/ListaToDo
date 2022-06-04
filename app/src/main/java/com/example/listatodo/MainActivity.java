@@ -1,5 +1,11 @@
 package com.example.listatodo;
 
+import static android.app.PendingIntent.FLAG_IMMUTABLE;
+
+import android.app.AlarmManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -13,6 +19,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.listatodo.MVVM.ViewModel;
 import com.example.listatodo.createTask.CreateTask;
 import com.example.listatodo.database.TaskDatabaseHandler;
+import com.example.listatodo.notification.NotificationReceiver;
 import com.example.listatodo.recyclerView.TaskRecyclerViewFragment;
 import com.example.listatodo.taskDataModel.TaskData;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -34,6 +41,7 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.activity_main);
         db = new TaskDatabaseHandler(this);
         model = new ViewModelProvider(this).get(ViewModel.class);
+        createNotificationChannel();
 
         loadTasks();
 
@@ -74,6 +82,30 @@ public class MainActivity extends AppCompatActivity{
 
     public TaskDatabaseHandler getDb(){
         return db;
+    }
+
+    public void setAlarm(TaskData task){
+        Intent intent = new Intent(MainActivity.this, NotificationReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this,0,intent,FLAG_IMMUTABLE);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+        Long timeClick = System.currentTimeMillis();
+
+        Long sec = task.getTaskEnd() - timeClick;
+
+        alarmManager.set(AlarmManager.RTC_WAKEUP, timeClick+sec,pendingIntent);
+    }
+
+    public void createNotificationChannel(){
+        CharSequence name = "testChannel";
+        String description = "des";
+
+        int importance = NotificationManager.IMPORTANCE_DEFAULT;
+        NotificationChannel channel = new NotificationChannel("notify",name,importance);
+        channel.setDescription(description);
+
+        NotificationManager notificationManager = getSystemService(NotificationManager.class);
+        notificationManager.createNotificationChannel(channel);
     }
 
     @Override
