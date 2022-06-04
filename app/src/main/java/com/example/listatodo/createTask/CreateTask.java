@@ -68,7 +68,7 @@ public class CreateTask extends Fragment {
     private Long convertStringDateToLong(String date) {
         long startDate = 0;
         try {
-            @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Date newDate = sdf.parse(date);
 
             startDate = newDate.getTime();
@@ -82,16 +82,23 @@ public class CreateTask extends Fragment {
 
     private void createTask() {
         if (validateData()) {
-            ((MainActivity) requireActivity()).getDb().addTask(new TaskData(taskTitle
+
+            TaskData taskData = new TaskData(taskTitle
                     , taskDescription
                     , startTaskDate
                     , endTaskDate
                     , TaskStatus.ACTIVE
                     , spinnerNotification.getSelectedItem().toString().equals("ON")
                     , TaskCategory.valueOf(spinnerCategory.getSelectedItem().toString())
-                    , Boolean.valueOf(editTextHaveAttachment.getText().toString())));
+                    , Boolean.valueOf(editTextHaveAttachment.getText().toString()));
+
+            ((MainActivity) requireActivity()).getDb().addTask(taskData);
 
             ((MainActivity) requireActivity()).loadTasks();
+
+            if (spinnerNotification.getSelectedItem().toString().equals("ON")) {
+                ((MainActivity) requireActivity()).setAlarm(taskData);
+            }
 
             switchFragment();
         }

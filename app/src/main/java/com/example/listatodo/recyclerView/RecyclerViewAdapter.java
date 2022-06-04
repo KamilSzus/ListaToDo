@@ -41,7 +41,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     private String convertTime(Long time) {
         final DateTimeFormatter formatter =
-                DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
         return Instant.ofEpochMilli(time)
                 .atZone(ZoneId.systemDefault())

@@ -24,11 +24,14 @@ import com.example.listatodo.recyclerView.TaskRecyclerViewFragment;
 import com.example.listatodo.taskDataModel.TaskData;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.time.Instant;
+import java.time.ZoneId;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity {
 
     private List<TaskData> taskData;
     private TaskDatabaseHandler db;
@@ -56,7 +59,7 @@ public class MainActivity extends AppCompatActivity{
         model.setTaskData(taskData);
     }
 
-    public void loadTasksByTitle(String title){
+    public void loadTasksByTitle(String title) {
         taskData = db.getAllTasks();
         taskData = taskData.stream()
                 .filter(taskData1 -> taskData1
@@ -68,7 +71,7 @@ public class MainActivity extends AppCompatActivity{
         model.setTaskData(taskData);
     }
 
-    public FloatingActionButton getFloatingActionButton(){
+    public FloatingActionButton getFloatingActionButton() {
         return floatingButton;
     }
 
@@ -80,28 +83,27 @@ public class MainActivity extends AppCompatActivity{
                 .commit();
     }
 
-    public TaskDatabaseHandler getDb(){
+    public TaskDatabaseHandler getDb() {
         return db;
     }
 
-    public void setAlarm(TaskData task){
+    public void setAlarm(TaskData task) {
         Intent intent = new Intent(MainActivity.this, NotificationReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this,0,intent,FLAG_IMMUTABLE);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, intent, FLAG_IMMUTABLE);
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
-        Long timeClick = System.currentTimeMillis();
 
-        Long sec = task.getTaskEnd() - timeClick;
+        System.out.println(task.getTaskEnd());
 
-        alarmManager.set(AlarmManager.RTC_WAKEUP, timeClick+sec,pendingIntent);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, task.getTaskEnd(), pendingIntent);
     }
 
-    public void createNotificationChannel(){
+    public void createNotificationChannel() {
         CharSequence name = "testChannel";
         String description = "des";
 
         int importance = NotificationManager.IMPORTANCE_DEFAULT;
-        NotificationChannel channel = new NotificationChannel("notify",name,importance);
+        NotificationChannel channel = new NotificationChannel("notify", name, importance);
         channel.setDescription(description);
 
         NotificationManager notificationManager = getSystemService(NotificationManager.class);
@@ -110,13 +112,13 @@ public class MainActivity extends AppCompatActivity{
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu,menu);
+        getMenuInflater().inflate(R.menu.menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId()==R.id.settings) {
+        if (item.getItemId() == R.id.settings) {
             Intent intent = new Intent(this, SettingsActivity.class);
             startActivity(intent);
         }

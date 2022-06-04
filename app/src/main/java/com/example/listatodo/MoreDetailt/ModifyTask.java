@@ -98,7 +98,7 @@ public class ModifyTask extends Fragment {
                 }
             });
 
-            ((MainActivity) requireActivity()).getDb().updateTask(new TaskData(id
+            TaskData taskData = new TaskData(id
                     , taskTitle
                     , taskDescription
                     , startTaskDate
@@ -106,9 +106,15 @@ public class ModifyTask extends Fragment {
                     , TaskStatus.ACTIVE
                     , spinnerNotification.getSelectedItem().toString().equals("ON")
                     , TaskCategory.valueOf(spinnerCategory.getSelectedItem().toString())
-                    , Boolean.valueOf(editTextHaveAttachment.getText().toString())));
+                    , Boolean.valueOf(editTextHaveAttachment.getText().toString()));
+
+            ((MainActivity) requireActivity()).getDb().updateTask(taskData);
 
             ((MainActivity) requireActivity()).loadTasks();
+
+            if (spinnerNotification.getSelectedItem().toString().equals("ON")) {
+                ((MainActivity) requireActivity()).setAlarm(taskData);
+            }
 
             switchFragment();
         }
@@ -125,7 +131,7 @@ public class ModifyTask extends Fragment {
 
     private String convertTime(Long time) {
         final DateTimeFormatter formatter =
-                DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
         return Instant.ofEpochMilli(time)
                 .atZone(ZoneId.systemDefault())
@@ -135,7 +141,7 @@ public class ModifyTask extends Fragment {
     private Long convertStringDateToLong(String date) {
         long startDate = 0;
         try {
-            @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Date newDate = sdf.parse(date);
 
             startDate = newDate.getTime();
