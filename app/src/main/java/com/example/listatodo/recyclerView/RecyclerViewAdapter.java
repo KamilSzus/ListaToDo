@@ -71,6 +71,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             endTask = itemView.findViewById(R.id.taskEndDate);
             finishTask = itemView.findViewById(R.id.endTask);
 
+            finishTask.setOnClickListener(view -> clickListener.onClickButtonFinish(getAdapterPosition()));
+
             itemView.setOnClickListener(v -> clickListener.onClickItem(getAdapterPosition()));
 
             itemView.setOnLongClickListener(view -> {

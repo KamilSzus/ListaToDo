@@ -7,6 +7,7 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,13 +16,16 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.preference.PreferenceManager;
 
 import com.example.listatodo.MVVM.ViewModel;
 import com.example.listatodo.createTask.CreateTask;
 import com.example.listatodo.database.TaskDatabaseHandler;
 import com.example.listatodo.notification.NotificationReceiver;
 import com.example.listatodo.recyclerView.TaskRecyclerViewFragment;
+import com.example.listatodo.taskDataModel.TaskCategory;
 import com.example.listatodo.taskDataModel.TaskData;
+import com.example.listatodo.taskDataModel.TaskStatus;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.time.Instant;
@@ -37,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
     private TaskDatabaseHandler db;
     private ViewModel model;
     private FloatingActionButton floatingButton;
+    private Boolean showCompletedTasks;
+    private String categoryTasks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +51,10 @@ public class MainActivity extends AppCompatActivity {
         db = new TaskDatabaseHandler(this);
         model = new ViewModelProvider(this).get(ViewModel.class);
         createNotificationChannel();
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        showCompletedTasks = prefs.getBoolean("completedTask",true);
+        categoryTasks = prefs.getString("categoryTasks","ALL");
 
         loadTasks();
 
@@ -56,11 +66,23 @@ public class MainActivity extends AppCompatActivity {
     public void loadTasks() {
         taskData = db.getAllTasks();
         taskData.sort(Comparator.comparing(TaskData::getTaskEnd));
+        if(showCompletedTasks.equals(false)) {
+            taskData = taskData.stream()
+                    .filter(taskData1 -> taskData1.getTaskStatus()
+                            .equals(TaskStatus.ACTIVE))
+                    .collect(Collectors.toList());
+        }
+        if(!categoryTasks.equals("ALL")){
+            taskData = taskData.stream()
+                    .filter(taskData1 -> taskData1.getTaskCategory()
+                            .equals(TaskCategory.valueOf(categoryTasks)))
+                    .collect(Collectors.toList());
+        }
         model.setTaskData(taskData);
     }
 
     public void loadTasksByTitle(String title) {
-        taskData = db.getAllTasks();
+        loadTasks();
         taskData = taskData.stream()
                 .filter(taskData1 -> taskData1
                         .getTaskTitle()

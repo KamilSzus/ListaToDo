@@ -19,7 +19,9 @@ import com.example.listatodo.MVVM.ViewModel;
 import com.example.listatodo.MainActivity;
 import com.example.listatodo.MoreDetailt.MoreDetailsAboutTask;
 import com.example.listatodo.R;
+import com.example.listatodo.taskDataModel.TaskCategory;
 import com.example.listatodo.taskDataModel.TaskData;
+import com.example.listatodo.taskDataModel.TaskStatus;
 
 import java.util.List;
 
@@ -91,6 +93,22 @@ public class TaskRecyclerViewFragment extends Fragment implements ClickListener 
         bundle.putSerializable("status", taskData.get(position).getTaskStatus());
         bundle.putBoolean("attachment", taskData.get(position).getHaveAttachment());
         replaceFragment(bundle);
+    }
+
+    @Override
+    public void onClickButtonFinish(int position) {
+        TaskData task = new TaskData(taskData.get(position).getId()
+                , taskData.get(position).getTaskTitle()
+                , taskData.get(position).getTaskDescription()
+                , taskData.get(position).getTaskStart()
+                , taskData.get(position).getTaskEnd()
+                , TaskStatus.COMPLETE
+                , taskData.get(position).getHaveNotification()
+                , taskData.get(position).getTaskCategory()
+                , taskData.get(position).getHaveAttachment());
+
+        ((MainActivity) requireActivity()).getDb().updateTask(task);
+        ((MainActivity) requireActivity()).loadTasks();
     }
 
     @Override
