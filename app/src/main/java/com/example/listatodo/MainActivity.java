@@ -2,18 +2,21 @@ package com.example.listatodo;
 
 import static android.app.PendingIntent.FLAG_IMMUTABLE;
 
+import android.Manifest;
 import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceManager;
@@ -28,10 +31,7 @@ import com.example.listatodo.taskDataModel.TaskData;
 import com.example.listatodo.taskDataModel.TaskStatus;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.time.Instant;
-import java.time.ZoneId;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -50,8 +50,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         db = new TaskDatabaseHandler(this);
         model = new ViewModelProvider(this).get(ViewModel.class);
-        createNotificationChannel();
 
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE}, PackageManager.PERMISSION_GRANTED);
+
+
+        createNotificationChannel();
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         showCompletedTasks = prefs.getBoolean("completedTask",true);
         categoryTasks = prefs.getString("categoryTasks","ALL");

@@ -46,8 +46,8 @@ public class TaskDatabaseHandler extends SQLiteOpenHelper {
                 + TASK_STATUS + " TEXT,"
                 + TASK_NOTIFICATION + " BOOLEAN,"
                 + TASK_CATEGORY + " TEXT,"
-                + TASK_ATTACHMENT + " TEXT"
-                +   ")";
+                + TASK_ATTACHMENT + " BLOB"
+                + ")";
 
         sqLiteDatabase.execSQL(CREATE_TASKS_TABLE);
 
@@ -72,7 +72,7 @@ public class TaskDatabaseHandler extends SQLiteOpenHelper {
         values.put(TASK_STATUS, task.getTaskStatus().toString());
         values.put(TASK_NOTIFICATION, task.getHaveNotification());
         values.put(TASK_CATEGORY, task.getTaskCategory().toString());
-        values.put(TASK_ATTACHMENT, "task.getAttachment().toString()");
+        values.put(TASK_ATTACHMENT, task.getAttachmentByte());
 
         db.insert(TABLE_NAME, null, values);
         db.close();
@@ -81,29 +81,29 @@ public class TaskDatabaseHandler extends SQLiteOpenHelper {
     TaskData getTask(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        @SuppressLint("Recycle") Cursor cursor = db.query(TABLE_NAME, new String[] {
-                         ID
-                        ,TASK_TITLE
-                        ,TASK_CREATION_TIME
-                        ,TASK_END_TIME
-                        ,TASK_STATUS
-                        ,TASK_NOTIFICATION
-                        ,TASK_CATEGORY
-                        ,TASK_ATTACHMENT}, ID + "=?"
-                , new String[] { String.valueOf(id) }, null, null, null, null);
+        @SuppressLint("Recycle") Cursor cursor = db.query(TABLE_NAME, new String[]{
+                        ID
+                        , TASK_TITLE
+                        , TASK_CREATION_TIME
+                        , TASK_END_TIME
+                        , TASK_STATUS
+                        , TASK_NOTIFICATION
+                        , TASK_CATEGORY
+                        , TASK_ATTACHMENT}, ID + "=?"
+                , new String[]{String.valueOf(id)}, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
 
         return new TaskData(
-                 Integer.valueOf(cursor.getString(0))
-                ,cursor.getString(1)
-                ,cursor.getString(2)
-                ,Long.valueOf(cursor.getString(3))
-                ,Long.valueOf(cursor.getString(4))
+                Integer.valueOf(cursor.getString(0))
+                , cursor.getString(1)
+                , cursor.getString(2)
+                , Long.valueOf(cursor.getString(3))
+                , Long.valueOf(cursor.getString(4))
                 , TaskStatus.valueOf(cursor.getString(5))
-                ,Boolean.valueOf(cursor.getString(6))
+                , Boolean.valueOf(cursor.getString(6))
                 , TaskCategory.valueOf(cursor.getString(7))
-                ,Boolean.valueOf(cursor.getString(8))
+                , (cursor.getBlob(8))
         );
     }
 
@@ -118,14 +118,14 @@ public class TaskDatabaseHandler extends SQLiteOpenHelper {
             do {
                 TaskData contact = new TaskData(
                         Integer.valueOf(cursor.getString(0))
-                        ,cursor.getString(1)
-                        ,cursor.getString(2)
-                        ,Long.valueOf(cursor.getString(3))
-                        ,Long.valueOf(cursor.getString(4))
-                        ,TaskStatus.valueOf(cursor.getString(5))
-                        ,Boolean.valueOf(cursor.getString(6))
-                        ,TaskCategory.valueOf(cursor.getString(7))
-                        ,Boolean.valueOf(cursor.getString(8))
+                        , cursor.getString(1)
+                        , cursor.getString(2)
+                        , Long.valueOf(cursor.getString(3))
+                        , Long.valueOf(cursor.getString(4))
+                        , TaskStatus.valueOf(cursor.getString(5))
+                        , Boolean.valueOf(cursor.getString(6))
+                        , TaskCategory.valueOf(cursor.getString(7))
+                        , (cursor.getBlob(8))
                 );
                 contactList.add(contact);
             } while (cursor.moveToNext());
@@ -145,18 +145,18 @@ public class TaskDatabaseHandler extends SQLiteOpenHelper {
         values.put(TASK_STATUS, task.getTaskStatus().toString());
         values.put(TASK_NOTIFICATION, task.getHaveNotification());
         values.put(TASK_CATEGORY, task.getTaskCategory().toString());
-        values.put(TASK_ATTACHMENT, "task.getAttachment().toString()");
+        values.put(TASK_ATTACHMENT, task.getAttachmentByte());
 
         System.out.println(task.getId());
 
         return db.update(TABLE_NAME, values, ID + " = ?",
-                new String[] { String.valueOf(task.getId()) });
+                new String[]{String.valueOf(task.getId())});
     }
 
     public void deleteTask(TaskData task) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_NAME, ID + " = ?",
-                new String[] { String.valueOf(task.getId()) });
+                new String[]{String.valueOf(task.getId())});
         db.close();
     }
 

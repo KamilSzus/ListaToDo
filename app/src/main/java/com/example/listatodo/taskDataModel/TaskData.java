@@ -9,10 +9,10 @@ public class TaskData {
     private TaskStatus taskStatus;
     private Boolean haveNotification;
     private TaskCategory taskCategory;
-    private Boolean haveAttachment;
+    private byte[] attachmentByte;
     private String attachment;
 
-    public TaskData(Integer id, String taskTitle, String taskDescription, Long taskStart, Long taskEnd, TaskStatus taskStatus, Boolean haveNotification, TaskCategory taskCategory, Boolean haveAttachment) {
+    public TaskData(Integer id, String taskTitle, String taskDescription, Long taskStart, Long taskEnd, TaskStatus taskStatus, Boolean haveNotification, TaskCategory taskCategory, byte[] attachmentByte) {
         this.id = id;
         this.taskTitle = taskTitle;
         this.taskDescription = taskDescription;
@@ -21,10 +21,10 @@ public class TaskData {
         this.taskStatus = taskStatus;
         this.haveNotification = haveNotification;
         this.taskCategory = taskCategory;
-        this.haveAttachment = haveAttachment;
+        this.attachmentByte = attachmentByte;
     }
 
-    public TaskData(Integer id, String taskTitle, String taskDescription, Long taskStart, Long taskEnd, TaskStatus taskStatus, Boolean haveNotification, TaskCategory taskCategory, Boolean haveAttachment, String attachment) {
+    public TaskData(Integer id, String taskTitle, String taskDescription, Long taskStart, Long taskEnd, TaskStatus taskStatus, Boolean haveNotification, TaskCategory taskCategory, byte[] attachmentByte, String attachment) {
         this.id = id;
         this.taskTitle = taskTitle;
         this.taskDescription = taskDescription;
@@ -33,11 +33,11 @@ public class TaskData {
         this.taskStatus = taskStatus;
         this.haveNotification = haveNotification;
         this.taskCategory = taskCategory;
-        this.haveAttachment = haveAttachment;
+        this.attachmentByte = attachmentByte;
         this.attachment = attachment;
     }
 
-    public TaskData(String taskTitle, String taskDescription, Long taskStart, Long taskEnd, TaskStatus taskStatus, Boolean haveNotification, TaskCategory taskCategory, Boolean haveAttachment) {
+    public TaskData(String taskTitle, String taskDescription, Long taskStart, Long taskEnd, TaskStatus taskStatus, Boolean haveNotification, TaskCategory taskCategory, byte[] attachmentByte) {
         this.taskTitle = taskTitle;
         this.taskDescription = taskDescription;
         this.taskStart = taskStart;
@@ -45,10 +45,10 @@ public class TaskData {
         this.taskStatus = taskStatus;
         this.haveNotification = haveNotification;
         this.taskCategory = taskCategory;
-        this.haveAttachment = haveAttachment;
+        this.attachmentByte = attachmentByte;
     }
 
-    public TaskData(String taskTitle, String taskDescription, Long taskStart, Long taskEnd, TaskStatus taskStatus, Boolean haveNotification, TaskCategory taskCategory, Boolean haveAttachment, String attachment) {
+    public TaskData(String taskTitle, String taskDescription, Long taskStart, Long taskEnd, TaskStatus taskStatus, Boolean haveNotification, TaskCategory taskCategory, byte[] attachmentByte, String attachment) {
         this.taskTitle = taskTitle;
         this.taskDescription = taskDescription;
         this.taskStart = taskStart;
@@ -56,7 +56,7 @@ public class TaskData {
         this.taskStatus = taskStatus;
         this.haveNotification = haveNotification;
         this.taskCategory = taskCategory;
-        this.haveAttachment = haveAttachment;
+        this.attachmentByte = attachmentByte;
         this.attachment = attachment;
     }
 
@@ -124,12 +124,12 @@ public class TaskData {
         this.taskCategory = taskCategory;
     }
 
-    public Boolean getHaveAttachment() {
-        return haveAttachment;
+    public byte[] getAttachmentByte() {
+        return attachmentByte;
     }
 
-    public void setHaveAttachment(Boolean haveAttachment) {
-        this.haveAttachment = haveAttachment;
+    public void setAttachmentByte(byte[] attachmentByte) {
+        this.attachmentByte = attachmentByte;
     }
 
     public Object getAttachment() {
