@@ -93,7 +93,12 @@ public class ModifyTask extends Fragment {
         createTask.setOnClickListener(v -> createTask());
     }
 
+
+
     public byte[] loadImage(){
+        if (editTextHaveAttachment.getText().toString().isEmpty()){
+            return null;
+        }
         String stringFilePath = Environment.getExternalStorageDirectory().getPath()+"/Download/"+editTextHaveAttachment.getText().toString()+".jpeg";
         Bitmap bitmap = BitmapFactory.decodeFile(stringFilePath);
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
