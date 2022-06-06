@@ -197,6 +197,16 @@ public class ModifyTask extends Fragment {
             return false;
         }
 
+        if (!editTextHaveAttachment.getText().toString().isEmpty()){
+            String stringFilePath = Environment.getExternalStorageDirectory().getPath()+"/Download/"+editTextHaveAttachment.getText().toString()+".jpeg";
+            Bitmap bitmap = BitmapFactory.decodeFile(stringFilePath);
+            if(bitmap==null){
+                editTextHaveAttachment.setError("Plik o podanej nazwie nie istnieje");
+                return false;
+            }
+        }
+
+
         return true;
     }
 }
