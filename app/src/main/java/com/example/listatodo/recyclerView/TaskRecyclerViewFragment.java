@@ -19,7 +19,6 @@ import com.example.listatodo.MVVM.ViewModel;
 import com.example.listatodo.MainActivity;
 import com.example.listatodo.MoreDetailt.MoreDetailsAboutTask;
 import com.example.listatodo.R;
-import com.example.listatodo.taskDataModel.TaskCategory;
 import com.example.listatodo.taskDataModel.TaskData;
 import com.example.listatodo.taskDataModel.TaskStatus;
 
@@ -91,7 +90,7 @@ public class TaskRecyclerViewFragment extends Fragment implements ClickListener 
         bundle.putLong("end", taskData.get(position).getTaskEnd());
         bundle.putSerializable("category", taskData.get(position).getTaskCategory());
         bundle.putSerializable("status", taskData.get(position).getTaskStatus());
-        bundle.putBoolean("attachment", taskData.get(position).getHaveAttachment());
+        bundle.putByteArray("attachment", taskData.get(position).getAttachmentByte());
         replaceFragment(bundle);
     }
 
@@ -105,7 +104,7 @@ public class TaskRecyclerViewFragment extends Fragment implements ClickListener 
                 , TaskStatus.COMPLETE
                 , taskData.get(position).getHaveNotification()
                 , taskData.get(position).getTaskCategory()
-                , taskData.get(position).getHaveAttachment());
+                , taskData.get(position).getAttachmentByte());
 
         ((MainActivity) requireActivity()).getDb().updateTask(task);
         ((MainActivity) requireActivity()).loadTasks();

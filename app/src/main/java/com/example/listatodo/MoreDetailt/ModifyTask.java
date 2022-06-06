@@ -1,12 +1,15 @@
 package com.example.listatodo.MoreDetailt;
 
 import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +24,7 @@ import com.example.listatodo.taskDataModel.TaskCategory;
 import com.example.listatodo.taskDataModel.TaskData;
 import com.example.listatodo.taskDataModel.TaskStatus;
 
+import java.io.ByteArrayOutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
@@ -89,6 +93,15 @@ public class ModifyTask extends Fragment {
         createTask.setOnClickListener(v -> createTask());
     }
 
+    public byte[] loadImage(){
+        String stringFilePath = Environment.getExternalStorageDirectory().getPath()+"/Download/"+editTextHaveAttachment.getText().toString()+".jpeg";
+        Bitmap bitmap = BitmapFactory.decodeFile(stringFilePath);
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 0, byteArrayOutputStream);
+        return byteArrayOutputStream.toByteArray();
+    }
+
+
     private void createTask() {
         if (validateData()) {
 
@@ -106,7 +119,7 @@ public class ModifyTask extends Fragment {
                     , TaskStatus.ACTIVE
                     , spinnerNotification.getSelectedItem().toString().equals("ON")
                     , TaskCategory.valueOf(spinnerCategory.getSelectedItem().toString())
-                    , Boolean.valueOf(editTextHaveAttachment.getText().toString()));
+                    , loadImage());
 
             ((MainActivity) requireActivity()).getDb().updateTask(taskData);
 

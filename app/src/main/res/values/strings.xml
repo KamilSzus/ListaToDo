@@ -12,11 +12,12 @@
     <string name="description">Description</string>
     <string name="category">Category</string>
     <string name="taskStatus">Task status</string>
-    <string name="haveAttachment">Have Attachment</string>
+    <string name="haveAttachment">Attachment url</string>
     <string name="dateFormat">yyyy-MM-dd HH:mm:ss</string>
     <string name="notification">Notification:</string>
     <string name="back">Back</string>
     <string name="settings">Settings</string>
     <string name="modify_task">Modify Task</string>
     <string name="podaj_nazw_taska">Podaj nazwę taska</string>
+    <string name="attachment_on_off">Attachment on/off</string>
 </resources>

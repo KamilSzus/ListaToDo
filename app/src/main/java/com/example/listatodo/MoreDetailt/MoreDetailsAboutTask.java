@@ -19,6 +19,7 @@ import com.example.listatodo.recyclerView.TaskRecyclerViewFragment;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 
 public class MoreDetailsAboutTask extends Fragment {
 
@@ -65,7 +66,12 @@ public class MoreDetailsAboutTask extends Fragment {
         textViewTaskStatus.setText((bundle.getSerializable("status")).toString());
 
         textViewHaveAttachment = view.findViewById(R.id.textViewHaveAttachment);
-        textViewHaveAttachment.setText(String.valueOf(bundle.getBoolean("attachment", false)));
+        if(bundle.getByteArray("attachment") == null){
+            textViewHaveAttachment.setText("brak załącznika");
+        }else{
+            textViewHaveAttachment.setText("załącznik dodany");
+        }
+
 
         buttonBack = view.findViewById(R.id.buttonBack);
         buttonBack.setOnClickListener(v -> switchFragment(new TaskRecyclerViewFragment()));
