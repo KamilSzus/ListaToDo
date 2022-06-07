@@ -9,6 +9,14 @@
             app:key="notifications"
             app:title="Enable message notifications"/>
 
+        <androidx.preference.ListPreference
+            app:defaultValue="0"
+            app:entries="@array/hours"
+            app:entryValues="@array/hours"
+            app:key="HoursToNotification"
+            app:title="Rodzaj zadań wyświetlanych"
+            app:useSimpleSummaryProvider="true" />
+
     </androidx.preference.PreferenceCategory>
 
     <androidx.preference.PreferenceCategory

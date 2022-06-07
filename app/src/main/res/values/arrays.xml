@@ -22,4 +22,12 @@
         <item>STUDY</item>
         <item>OTHER</item>
     </string-array>
+
+    <string-array name="hours">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
 </resources>

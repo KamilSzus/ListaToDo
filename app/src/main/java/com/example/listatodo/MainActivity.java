@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     private FloatingActionButton floatingButton;
     private Boolean showCompletedTasks;
     private String categoryTasks;
+    private String HoursToNotification;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         showCompletedTasks = prefs.getBoolean("completedTask",true);
         categoryTasks = prefs.getString("categoryTasks","ALL");
+        HoursToNotification = prefs.getString("HoursToNotification","0");
 
         loadTasks();
 
@@ -118,10 +120,12 @@ public class MainActivity extends AppCompatActivity {
         PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, intent, FLAG_IMMUTABLE);
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
-
+        System.out.println(HoursToNotification);
         System.out.println(task.getTaskEnd());
+        long temp = task.getTaskEnd() + (Long.parseLong(HoursToNotification) * 3600000);
+        System.out.println(temp);
 
-        alarmManager.set(AlarmManager.RTC_WAKEUP, task.getTaskEnd(), pendingIntent);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, temp, pendingIntent);
     }
 
     public void createNotificationChannel() {

@@ -97,7 +97,6 @@ public class CreateTask extends Fragment {
 
     private void createTask() {
         if (validateData()) {
-
             TaskData taskData = new TaskData(taskTitle
                     , taskDescription
                     , startTaskDate
