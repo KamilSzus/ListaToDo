@@ -88,7 +88,7 @@ public class CreateTask extends Fragment {
         if (editTextHaveAttachment.getText().toString().isEmpty()){
             return null;
         }
-        String stringFilePath = Environment.getExternalStorageDirectory().getPath()+"/Download/"+editTextHaveAttachment.getText().toString()+".jpeg";
+        String stringFilePath = Environment.getExternalStorageDirectory().getPath()+"/Download/"+editTextHaveAttachment.getText().toString();
         Bitmap bitmap = BitmapFactory.decodeFile(stringFilePath);
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 0, byteArrayOutputStream);
@@ -107,13 +107,11 @@ public class CreateTask extends Fragment {
                     , loadImage());
 
             ((MainActivity) requireActivity()).getDb().addTask(taskData);
-
             ((MainActivity) requireActivity()).loadTasks();
 
             if (spinnerNotification.getSelectedItem().toString().equals("ON")) {
                 ((MainActivity) requireActivity()).setAlarm(taskData);
             }
-
             switchFragment();
         }
     }

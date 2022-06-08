@@ -16,7 +16,6 @@
             app:key="HoursToNotification"
             app:title="Rodzaj zadań wyświetlanych"
             app:useSimpleSummaryProvider="true" />
-
     </androidx.preference.PreferenceCategory>
 
     <androidx.preference.PreferenceCategory

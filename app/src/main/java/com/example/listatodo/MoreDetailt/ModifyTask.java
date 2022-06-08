@@ -83,7 +83,7 @@ public class ModifyTask extends Fragment {
         editTextDateEnd.setText(convertTime(bundle.getLong("end", 0L)));
 
         editTextHaveAttachment = view.findViewById(R.id.editTextHaveAttachment);
-        editTextHaveAttachment.setText((bundle.getSerializable("category")).toString());
+        editTextHaveAttachment.setText("");
 
         spinnerCategory = view.findViewById(R.id.spinnerCategory);
         spinnerNotification = view.findViewById(R.id.spinnerNotification);
