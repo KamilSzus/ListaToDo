@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.listatodo.R;
 import com.example.listatodo.taskDataModel.TaskData;
+import com.example.listatodo.taskDataModel.TaskStatus;
 
 import java.time.Instant;
 import java.time.ZoneId;
@@ -37,6 +38,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.startTask.setText(convertTime(taskDataList.get(position).getTaskStart()));
         holder.endTask.setText(convertTime(taskDataList.get(position).getTaskEnd()));
         holder.titleOfTask.setText(taskDataList.get(position).getTaskTitle());
+        if(taskDataList.get(position).getTaskStatus().equals(TaskStatus.COMPLETE)){
+            holder.finishTask.setImageResource(R.drawable.ic_baseline_radio_button_checked_24);
+        }
+        //if(taskDataList.get(position).getTaskStatus().equals(TaskStatus.ACTIVE)){
+        //    holder.finishTask.setImageResource(R.drawable.ic_baseline_radio_button_unchecked_24);
+        //}
     }
 
     private String convertTime(Long time) {
@@ -72,7 +79,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             finishTask = itemView.findViewById(R.id.endTask);
 
             finishTask.setOnClickListener(view -> clickListener.onClickButtonFinish(getAdapterPosition()));
-
             itemView.setOnClickListener(v -> clickListener.onClickItem(getAdapterPosition()));
 
             itemView.setOnLongClickListener(view -> {

@@ -25,6 +25,10 @@ import com.example.listatodo.taskDataModel.TaskData;
 import com.example.listatodo.taskDataModel.TaskStatus;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -88,11 +92,19 @@ public class CreateTask extends Fragment {
         if (editTextHaveAttachment.getText().toString().isEmpty()){
             return null;
         }
-        String stringFilePath = Environment.getExternalStorageDirectory().getPath()+"/Download/"+editTextHaveAttachment.getText().toString();
-        Bitmap bitmap = BitmapFactory.decodeFile(stringFilePath);
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 0, byteArrayOutputStream);
-        return byteArrayOutputStream.toByteArray();
+        if(editTextHaveAttachment.getText().toString().contains(".jpeg") || editTextHaveAttachment.getText().toString().contains(".png")){
+            String stringFilePath = Environment.getExternalStorageDirectory().getPath()+"/Download/"+editTextHaveAttachment.getText().toString();
+            Bitmap bitmap = BitmapFactory.decodeFile(stringFilePath);
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 0, byteArrayOutputStream);
+            return byteArrayOutputStream.toByteArray();
+        }
+        try {
+            return Files.readAllBytes(Paths.get(Environment.getExternalStorageDirectory().getPath() + "/Download/" + editTextHaveAttachment.getText().toString()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     private void createTask() {
@@ -152,9 +164,9 @@ public class CreateTask extends Fragment {
         }
 
         if (!editTextHaveAttachment.getText().toString().isEmpty()){
-            String stringFilePath = Environment.getExternalStorageDirectory().getPath()+"/Download/"+editTextHaveAttachment.getText().toString()+".jpeg";
-            Bitmap bitmap = BitmapFactory.decodeFile(stringFilePath);
-            if(bitmap==null){
+            try {
+                byte[] temp = Files.readAllBytes(Paths.get(Environment.getExternalStorageDirectory().getPath() + "/Download/" + editTextHaveAttachment.getText().toString()));
+            } catch (IOException e) {
                 editTextHaveAttachment.setError("Plik o podanej nazwie nie istnieje");
                 return false;
             }

@@ -96,18 +96,34 @@ public class TaskRecyclerViewFragment extends Fragment implements ClickListener 
 
     @Override
     public void onClickButtonFinish(int position) {
-        TaskData task = new TaskData(taskData.get(position).getId()
-                , taskData.get(position).getTaskTitle()
-                , taskData.get(position).getTaskDescription()
-                , taskData.get(position).getTaskStart()
-                , taskData.get(position).getTaskEnd()
-                , TaskStatus.COMPLETE
-                , taskData.get(position).getHaveNotification()
-                , taskData.get(position).getTaskCategory()
-                , taskData.get(position).getAttachmentByte());
+        if(taskData.get(position).getTaskStatus().equals(TaskStatus.ACTIVE)) {
+            TaskData task = new TaskData(taskData.get(position).getId()
+                    , taskData.get(position).getTaskTitle()
+                    , taskData.get(position).getTaskDescription()
+                    , taskData.get(position).getTaskStart()
+                    , taskData.get(position).getTaskEnd()
+                    , TaskStatus.COMPLETE
+                    , taskData.get(position).getHaveNotification()
+                    , taskData.get(position).getTaskCategory()
+                    , taskData.get(position).getAttachmentByte());
 
-        ((MainActivity) requireActivity()).getDb().updateTask(task);
-        ((MainActivity) requireActivity()).loadTasks();
+            ((MainActivity) requireActivity()).getDb().updateTask(task);
+            ((MainActivity) requireActivity()).loadTasks();
+        }
+        //if(taskData.get(position).getTaskStatus().equals(TaskStatus.COMPLETE)) {
+        //    TaskData task = new TaskData(taskData.get(position).getId()
+        //            , taskData.get(position).getTaskTitle()
+        //            , taskData.get(position).getTaskDescription()
+        //            , taskData.get(position).getTaskStart()
+        //            , taskData.get(position).getTaskEnd()
+        //            , TaskStatus.ACTIVE
+        //            , taskData.get(position).getHaveNotification()
+        //            , taskData.get(position).getTaskCategory()
+        //            , taskData.get(position).getAttachmentByte());
+//
+        //    ((MainActivity) requireActivity()).getDb().updateTask(task);
+        //    ((MainActivity) requireActivity()).loadTasks();
+        //}
     }
 
     @Override
