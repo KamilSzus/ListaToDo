@@ -41,9 +41,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         if(taskDataList.get(position).getTaskStatus().equals(TaskStatus.COMPLETE)){
             holder.finishTask.setImageResource(R.drawable.ic_baseline_radio_button_checked_24);
         }
-        //if(taskDataList.get(position).getTaskStatus().equals(TaskStatus.ACTIVE)){
-        //    holder.finishTask.setImageResource(R.drawable.ic_baseline_radio_button_unchecked_24);
-        //}
+        if(taskDataList.get(position).getTaskStatus().equals(TaskStatus.ACTIVE)){
+            holder.finishTask.setImageResource(R.drawable.ic_baseline_radio_button_unchecked_24);
+        }
     }
 
     private String convertTime(Long time) {
